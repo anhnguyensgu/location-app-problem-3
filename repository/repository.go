@@ -13,6 +13,8 @@ type Event struct {
 	Timezone  string `validate:"required"`
 	Email     string `validate:"required"`
 	IpAddress string `validate:"required"`
+	Latitude  float64
+	Longitude float64
 	createdAt primitive.Timestamp
 }
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 	"problem3/web-service/handler"
 	"problem3/web-service/mgconfig"
 
@@ -11,7 +10,7 @@ import (
 )
 
 func main() {
-	port := os.Getenv("PORT")
+	// port := os.Getenv("PORT")
 	engine := html.New("./view", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
@@ -20,7 +19,7 @@ func main() {
 
 	client, ctx, eventRepository, visitStatsRepository := mgconfig.InitializeMongoConnection()
 	eventHadler := handler.NewEventHandler(eventRepository, visitStatsRepository)
-	statHandler := handler.NewStatHandler(visitStatsRepository)
+	statHandler := handler.NewStatHandler(eventRepository, visitStatsRepository)
 	defer client.Disconnect(ctx)
 
 	app.Get("/api/events", eventHadler.GetEvents)
@@ -33,5 +32,5 @@ func main() {
 		return c.Render("index", fiber.Map{})
 	})
 
-	log.Fatal(app.Listen(":" + port))
+	log.Fatal(app.Listen(":3001"))
 }

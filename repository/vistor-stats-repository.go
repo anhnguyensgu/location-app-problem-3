@@ -20,7 +20,7 @@ type VisitorStats struct {
 
 type VistorStatsRepository interface {
 	IncreaseVistorCount(event Event)
-	GetVisitStats() []VisitorStats
+	GetVisitStats(paginationParam PaginationParameter) []VisitorStats
 }
 
 func NewVistorStatsRepository(statsCollection *mongo.Collection) VistorStatsRepository {
@@ -36,11 +36,11 @@ func (v *vistorStatsRepository) IncreaseVistorCount(event Event) {
 	v.collection.UpdateOne(context.Background(), filter, update, opts)
 }
 
-func (v *vistorStatsRepository) GetVisitStats() []VisitorStats {
+func (v *vistorStatsRepository) GetVisitStats(paginationParam PaginationParameter) []VisitorStats {
 	filterOpt := options.Find()
-	filterOpt.SetSkip(0)
-	filterOpt.SetSort(bson.M{"visit": -1})
-	filterOpt.SetLimit(10)
+	filterOpt.SetSkip(paginationParam.Skip)
+	filterOpt.SetSort(bson.M{paginationParam.SortField: paginationParam.Assending})
+	filterOpt.SetLimit(paginationParam.Limit)
 
 	cursor, _ := v.collection.Find(context.Background(), bson.M{}, filterOpt)
 

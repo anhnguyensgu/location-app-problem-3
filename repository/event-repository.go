@@ -37,6 +37,8 @@ func (ep *eventRepository) SaveEvent(newEvent Event) {
 		{Key: "timezone", Value: newEvent.Timezone},
 		{Key: "email", Value: newEvent.Email},
 		{Key: "ipAddress", Value: newEvent.IpAddress},
+		{Key: "latitude", Value: newEvent.Latitude},
+		{Key: "longitude", Value: newEvent.Longitude},
 		{Key: "createdAt", Value: primitive.Timestamp{T: uint32(time.Now().Unix())}},
 	})
 

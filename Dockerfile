@@ -12,6 +12,5 @@ COPY . .
 RUN go build -o ./app ./main.go
 
 # COPY /api/app.out .
-expose 3001
 ENTRYPOINT ["./app"]
 
