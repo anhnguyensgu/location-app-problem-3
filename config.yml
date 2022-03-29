@@ -1,2 +1,0 @@
-mongo:
-  connection-string: mongodb+srv://location-app:pBJktXWnDnQ66jHj@cluster0.h91nr.mongodb.net/test?authSource=admin&replicaSet=atlas-p9klgk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true
