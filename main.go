@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"problem3/web-service/handler"
 	"problem3/web-service/mgconfig"
 
@@ -10,7 +11,7 @@ import (
 )
 
 func main() {
-	// port := os.Getenv("PORT")
+	port := os.Getenv("PORT")
 	engine := html.New("./view", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
@@ -32,5 +33,5 @@ func main() {
 		return c.Render("index", fiber.Map{})
 	})
 
-	log.Fatal(app.Listen(":3001"))
+	log.Fatal(app.Listen(":" + port))
 }
