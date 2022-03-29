@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import axios from 'axios';
 import { Table, Tabs } from 'antd';
@@ -54,6 +54,14 @@ const columns2 = [
 function App() {
   const [latestVistors, setLatestVisitor] = useState([]);
   const [mostVisitUser, setMostVisitUser] = useState([]);
+  const timer = useRef(null);
+
+  const fetchStat = async () => {
+    const res = await axios.get('/api/stats');
+    const { LatestVisit, MostVisit } = res.data;
+    setMostVisitUser(MostVisit);
+    setLatestVisitor(LatestVisit);
+  }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({coords}) => {
@@ -66,11 +74,9 @@ function App() {
         "Latitude": latitude,
       });
     })
-    axios.get('/api/stats').then((res) => {
-      const {LatestVisit, MostVisit} = res.data
-      setMostVisitUser(MostVisit);
-      setLatestVisitor(LatestVisit);
-    });
+    fetchStat();
+    timer.current = setInterval(fetchStat, 5000);
+    return () => clearInterval(timer.current);
   }, []);
 
   return (
