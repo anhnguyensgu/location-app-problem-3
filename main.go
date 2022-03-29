@@ -2,16 +2,16 @@ package main
 
 import (
 	"log"
+	"os"
 	"problem3/web-service/handler"
 	"problem3/web-service/mgconfig"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
-	"github.com/qinains/fastergoding"
 )
 
 func main() {
-	fastergoding.Run()
+	port := os.Getenv("PORT")
 	engine := html.New("./view", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
@@ -33,5 +33,5 @@ func main() {
 		return c.Render("index", fiber.Map{})
 	})
 
-	log.Fatal(app.Listen(":3001"))
+	log.Fatal(app.Listen(":" + port))
 }
