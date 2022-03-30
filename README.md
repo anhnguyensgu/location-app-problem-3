@@ -31,3 +31,5 @@ Note: Currently, proxy server is set up in <b>package.json
 ## Docker Run
 1. Build docker image by using this command ```docker build -t <your-tag> .```
 2. Run docker container with this command ```docker run -d -e PORT=<your-port> -p <your-port>:<your-port> --name <your-tag> location-ap```
+# Heroku
+https://pacific-retreat-20685.herokuapp.com/
